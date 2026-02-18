@@ -92,13 +92,29 @@ Indoor light (~200–500 lux office lighting) produces only **0.1–1 W/m²** vs
 | **Panasonic AM-1815** | a-Si | ~35 µW (200 lux) | ~175 µW | 53×25 |
 | **IXYS/Anysolar KXOB25** | Mono-Si | ~10 µW (200 lux) | ~50 µW | 22×25 |
 | **Epishine LEH3 series** | Organic PV | ~40 µW (200 lux) | — | 52×27 |
+| **[Panasonic AM-1417CA](https://www.digikey.com/en/products/detail/panasonic-energy/AM-1417CA-DGK-E/2165185)** | a-Si | ~30 µW (200 lux) | ~150 µW | 41×26 |
+| **[ANYSOLAR SM111K04L](https://www.digikey.com/en/products/detail/anysolar-ltd/SM111K04L/9990435)** | Mono-Si | ~15 µW (200 lux) | ~80 µW | Small form factor |
 
 **Why a-Si excels indoors:**
 - Broader spectral response matches artificial light (LED, fluorescent)
 - Better performance in diffuse/low light
 - Monocrystalline cells are optimized for the solar spectrum, not indoor LED peaks
 
-## 2.5 Connecting Cells: Series vs. Parallel
+## 2.5 Photodiodes as Micro Solar Cells
+
+Standard photodiodes like the **BPW34** can function as tiny solar cells, producing microwatts of power — enough for ultra-low-power BLE nodes when paired with an efficient harvester like the BQ25570.
+
+- **BPW34** — silicon PIN photodiode, ~7mm² active area, produces ~50–100µW in direct sun
+- Multiple BPW34s in series/parallel can reach voltages suitable for energy harvesting ICs
+- Advantage: widely available, cheap (~$0.50), well-characterized, solderable
+
+**Projects & References:**
+- [PocketConcepts/Solar_nRF](https://github.com/PocketConcepts/Solar_nRF) — BPW34 solar-powered nRF BLE beacon, complete project with schematics
+- [Ultra Low Power Energy Harvester from BPW34](https://hackaday.io/project/85457-ultra-low-power-energy-harvester-from-bpw34) — Hackaday project demonstrating BPW34 → BQ25504 → supercap → MCU
+
+**When to consider photodiodes over solar cells:** When you need a standard, solderable component with a well-defined datasheet and your power budget is in the single-digit microwatt range (e.g., BLE beacons, RTC-only systems).
+
+## 2.6 Connecting Cells: Series vs. Parallel
 
 | Configuration | Effect | When to Use |
 |---------------|--------|-------------|
@@ -108,7 +124,7 @@ Indoor light (~200–500 lux office lighting) produces only **0.1–1 W/m²** vs
 
 **⚠ Warning:** In series strings, the weakest/shadowed cell limits the entire string's current. Use bypass diodes on larger panels.
 
-## 2.6 DIY vs. Commercial Panels
+## 2.7 DIY vs. Commercial Panels
 
 ### DIY Approach
 - Buy bare cells (ANYSOLAR, tabbed cells from AliExpress)
@@ -125,7 +141,7 @@ Indoor light (~200–500 lux office lighting) produces only **0.1–1 W/m²** vs
 
 **Recommendation:** Use commercial for production/outdoor. DIY for prototyping and learning.
 
-## 2.7 Panel Testing & Verification
+## 2.8 Panel Testing & Verification
 
 Always verify panel specs — especially cheap panels:
 
@@ -139,7 +155,7 @@ Always verify panel specs — especially cheap panels:
 Expected I_sc (outdoor) ≈ Rated_I_sc × (Actual_irradiance / 1000)
 ```
 
-## 2.8 Mechanical Considerations
+## 2.9 Mechanical Considerations
 
 | Concern | Notes |
 |---------|-------|
@@ -149,7 +165,7 @@ Expected I_sc (outdoor) ≈ Rated_I_sc × (Actual_irradiance / 1000)
 | **Weight** | Flexible panels: 50–200 g. Rigid glass panels: 500g–2kg for 10–25W |
 | **Temperature** | Mount with airflow behind panel. Black surfaces on roofs can hit 65–80°C |
 
-## 2.9 Key Suppliers
+## 2.10 Key Suppliers
 
 | Supplier | Specialty | URL |
 |----------|-----------|-----|
@@ -164,7 +180,7 @@ Expected I_sc (outdoor) ≈ Rated_I_sc × (Actual_irradiance / 1000)
 | **Renogy** | Quality 10W+ panels | renogy.com |
 | **Epishine** | Organic PV for indoor | epishine.com |
 
-## 2.10 Summary & Quick Selection Guide
+## 2.11 Summary & Quick Selection Guide
 
 ```
 Need < 100mW indoor?     → PowerFilm Indoor Light Series or Panasonic AM-1815

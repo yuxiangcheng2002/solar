@@ -10,7 +10,30 @@
 | **Supercapacitor** | 2.5–2.7V/cell | Rated V | 0V (usable) | 5–10 Wh/kg | 500k–1M+ | 10–30%/day | Excellent | Burst power, infinite cycle |
 | **Thin-film Li** | 3.7–4.1V | 4.2V | 3.0V | 10–50 Wh/kg | 1000+ | Very low | Excellent | Wearables, PCB-mount |
 
-## 4.2 Chemistry Deep Dives
+## 4.2 Primary Cells for Ultra-Low-Power Nodes
+
+Not every solar node needs a rechargeable battery. For ultra-low-power applications (µW average draw), a **primary (non-rechargeable) coin cell** can last years — sometimes longer than a rechargeable setup with its added complexity.
+
+| Cell | Chemistry | Voltage | Capacity | Self-Discharge | Notes |
+|------|-----------|---------|----------|----------------|-------|
+| **[CR2032](https://energy.panasonic.com/na/business/products/lithium/models/CR2032)** | Li-MnO₂ | 3.0V | 220mAh | ~1%/year | Ubiquitous, cheap (~$0.20), fits most coin cell holders |
+| **[CR2477](https://energy.panasonic.com/na/business/products/lithium/models/CR2477)** | Li-MnO₂ | 3.0V | 1000mAh | ~1%/year | 4.5× capacity of CR2032, larger (24.5mm dia × 7.7mm) |
+
+**When to use a primary cell instead of solar + rechargeable:**
+- Average current draw < 10µA (e.g., BLE beacon every 10s, temperature sensor every 15min)
+- Deployment location has no reliable light (sealed enclosure, underground, closet)
+- Simplicity is paramount — no charge circuit, no panel, no MPPT IC
+- CR2477 at 10µA average → **~11 years** theoretical life (derate to 5–7 years practical)
+
+**When to add solar harvesting instead:**
+- Average current > 50µA, or frequent radio TX bursts
+- Deployment lifetime target > 5 years
+- Light is reliably available (even indoor)
+- You want "deploy and forget" without battery swaps
+
+**Hybrid approach:** Some designs use a CR2032/CR2477 as a **backup primary cell** alongside solar + supercap. The AEM10941 has a dedicated primary battery backup input for exactly this use case.
+
+## 4.3 Chemistry Deep Dives
 
 ### LiPo / Li-ion (Lithium Polymer)
 
@@ -112,7 +135,7 @@ That's enough for ~18 ESP32 WiFi transmissions (260mJ each)
 - **Best for:** PCB-level energy storage alongside supercaps
 - **Very low capacity** — only for µW-level loads (RTC backup, BLE beacons)
 
-## 4.3 Battery Sizing for Solar Systems
+## 4.4 Battery Sizing for Solar Systems
 
 ### Method
 
@@ -150,7 +173,7 @@ At 3.7V: 12,000 / 3.7 = 3,243 mAh/day
 → Use 10,000mAh LiPo or 2× 18650 (3500mAh each, in parallel = 7000mAh — tight)
 ```
 
-## 4.4 Charge Profiles
+## 4.5 Charge Profiles
 
 ### CC-CV (LiPo / Li-ion / LiFePO4)
 
@@ -178,7 +201,7 @@ With small solar panels, charge current may be very low (µA–mA):
 - **BQ25570/BQ25504** handle this well — designed for µW harvesting
 - **TP4056** may not start charging below ~30mA — not ideal for tiny panels
 
-## 4.5 Battery Protection
+## 4.6 Battery Protection
 
 ### Required Protections
 
@@ -207,7 +230,7 @@ Most charge ICs (TP4056, BQ24074, etc.) have a TEMP/TS pin:
 - **Critical for outdoor solar:** Panels on hot roofs can heat batteries nearby
 - **Critical for cold climates:** Must prevent charging below 0°C
 
-## 4.6 Cold Weather Considerations
+## 4.7 Cold Weather Considerations
 
 | Issue | Temperature | Impact | Mitigation |
 |-------|------------|--------|------------|
@@ -225,7 +248,7 @@ Most charge ICs (TP4056, BQ24074, etc.) have a TEMP/TS pin:
 4. Consider LiFePO4 for better cold tolerance
 5. Supercap for burst power even in extreme cold
 
-## 4.7 Supercapacitor vs. Battery Trade-offs
+## 4.8 Supercapacitor vs. Battery Trade-offs
 
 | Criterion | Supercap Wins | Battery Wins |
 |-----------|--------------|-------------|
@@ -241,7 +264,7 @@ Most charge ICs (TP4056, BQ24074, etc.) have a TEMP/TS pin:
 - Supercap for burst power (WiFi/LoRa TX) + small LiFePO4 for overnight storage
 - BQ25570 charges supercap as primary storage; battery backs up for dark periods
 
-## 4.8 Battery Management System (BMS) for Multi-Cell
+## 4.9 Battery Management System (BMS) for Multi-Cell
 
 For Pi-class systems using multiple cells:
 
@@ -254,7 +277,7 @@ For Pi-class systems using multiple cells:
 
 **For IoT: Stick with 1S whenever possible.** Multi-cell adds complexity, cost, and failure modes.
 
-## 4.9 Practical Recommendations by Application
+## 4.10 Practical Recommendations by Application
 
 ### Wearable / Ultra-Low Power
 - **Storage:** 50–200mAh LiPo or 0.1–1F supercap
@@ -276,7 +299,7 @@ For Pi-class systems using multiple cells:
 - **Charge IC:** BQ25570 + LiFePO4 (configure OV to 3.6V)
 - **Strategy:** Massive over-provisioning of panel + battery; system survives even at 50% degradation
 
-## 4.10 Summary
+## 4.11 Summary
 
 | Chemistry | Use When | Avoid When |
 |-----------|----------|------------|
@@ -289,5 +312,9 @@ For Pi-class systems using multiple cells:
 **Golden rule:** For solar IoT, **LiFePO4 + small supercap** is the most robust combination. For compact wearables, **LiPo + BQ25570** is the proven path.
 
 ---
+
+## 4.12 Further Reading
+
+- 📺 [Solving the Smart Home Battery Problem](https://www.youtube.com/watch?v=-wEKOhVZ0NM) — excellent overview of low-power design choices, battery selection, and why solar harvesting beats battery replacement for smart home sensors
 
 **Next:** [Chapter 5 — Power Regulation & Distribution](05-power-regulation.md)

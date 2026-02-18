@@ -352,6 +352,14 @@ Integrating small solar cells into clothing or accessories to trickle-charge wea
 
 Even indoor light (200 lux) produces ~10–30µW from a small cell, which with a BQ25570 and supercap can sustain a BLE beacon transmitting every few seconds.
 
+### Wearable Solar Research References
+
+Emerging research pushing the boundaries of self-powered wearables:
+
+- [Hapt-Aids: Self-Powered On-Body Haptics for Activity Monitoring](https://www.citedrive.com/en/discovery/hapt-aids-self-powered-on-body-haptics-for-activity-monitoring/) — band-aid form factor self-powered haptic device, demonstrates fully autonomous body-worn sensing
+- [A Nano-Biohybrid Bio-Solar Cell (Advanced Materials, 2023)](https://advanced.onlinelibrary.wiley.com/doi/10.1002/adma.202303125) — bio-solar cell for biomedical applications, explores biological photovoltaics at the micro scale
+- [Autonomous Wearable Biosensor Powered by Perovskite Solar Cell (Nature Electronics, 2023)](https://www.nature.com/articles/s41928-023-00996-y) — perovskite solar cells integrated with wearable biosensors, demonstrates continuous autonomous health monitoring
+
 ---
 
 ## 9.6 Build Tips & Common Mistakes

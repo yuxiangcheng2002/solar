@@ -89,7 +89,8 @@ Solar Cell → VIN_DC ─┐
 - You need the VSTOR voltage directly (e.g., charging a supercap at the storage voltage)
 - Cost-sensitive designs
 
-**Datasheet:** [ti.com/lit/ds/symlink/bq25504.pdf](https://www.ti.com/lit/ds/symlink/bq25504.pdf)
+**Datasheet:** [ti.com/lit/ds/symlink/bq25504.pdf](https://www.ti.com/lit/ds/symlink/bq25504.pdf)  
+**DigiKey:** [BQ25504RGTR](https://www.digikey.com/en/products/detail/texas-instruments/BQ25504RGTR/2799286)
 
 ---
 
@@ -114,7 +115,8 @@ Solar Cell → VIN_DC ─┐
 **Evaluation board:** AEM10941-QFN28-EVK
 
 **Datasheet:** [mouser.com/datasheet/2/1087/e_peas_AEM10941_datasheet](https://www.mouser.com/datasheet/2/1087/e_peas_AEM10941_datasheet_energy_harvesting-2325372.pdf)  
-**App note:** [e-peas.com/documents/AEM10941/AN-AEM10941.pdf](https://e-peas.com/documents/AEM10941/AN-AEM10941.pdf)
+**App note:** [e-peas.com/documents/AEM10941/AN-AEM10941.pdf](https://e-peas.com/documents/AEM10941/AN-AEM10941.pdf)  
+**Ready-made breakouts:** [Jasper Sikken's AEM10941 Solar Harvesting Boards](https://www.hackster.io/news/jasper-sikken-s-solar-harvesting-boards-make-it-easy-to-integrate-e-peas-aem10941-into-your-designs-fb1e976c0ab6) — open-hardware breakout boards for easy prototyping
 
 ---
 
